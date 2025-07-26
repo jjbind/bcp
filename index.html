@@ -1,1 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BASS COFFEE PARTY | Official Site</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a; /* Black */
+            color: #f7f3e8; /* Off-white/Cream for general text */
+        }
+        h1, h2, h3 {
+            font-family: 'Bebas Neue', sans-serif;
+        }
+        .section-container {
+            background-color: #4b2e2b; /* Dark Brown */
+            border-radius: 0.75rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .kpi-card {
+            background-color: #ff5c28; /* Orange */
+            color: #0a0a0a; /* Black for contrast */
+            border-radius: 0.75rem;
+            padding: 2rem;
+            display: flex; /* Changed to flex */
+            flex-direction: column; /* Stack children vertically */
+            align-items: center; /* Center children horizontally */
+            justify-content: center; /* Center children vertically if space allows */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .kpi-number {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1;
+            color: #00ffc2; /* Mint Green */
+        }
+        .kpi-label {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-top: 0.5rem;
+        }
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        .feature-icon {
+            flex-shrink: 0;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #0a0a0a; /* Black for contrast */
+            margin-right: 1rem;
+        }
+        .flow-step {
+            display: flex; /* Keep flex for icon and text alignment within the grid cell */
+            align-items: flex-start;
+            /* Removed margin-bottom as gap handles spacing */
+        }
+        .flow-icon {
+            flex-shrink: 0;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #0a0a0a; /* Black for contrast */
+            margin-right: 1rem; /* Added margin for spacing in grid */
+        }
+        .flow-line {
+            display: none; /* Removed as it's not needed for grid layout */
+        }
+        .data-table th, .data-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(247, 243, 232, 0.1); /* Light border for rows */
+        }
+        .data-table th {
+            background-color: #0a0a0a; /* Black */
+            color: #00ffc2; /* Mint Green */
+            font-weight: bold;
+        }
+        .data-table tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.05); /* Slightly lighter for even rows */
+        }
+        .data-table tr:nth-child(odd) {
+            background-color: rgba(0, 0, 0, 0.1); /* Slightly darker for odd rows */
+        }
+        .data-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        .text-custom-cream {
+            color: #f7f3e8;
+        }
+        .llm-button {
+            background-color: #00ffc2; /* Mint Green */
+            color: #0a0a0a; /* Black */
+            font-weight: bold;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            transition: transform 0.2s ease-in-out;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .llm-button:hover {
+            transform: translateY(-2px);
+        }
+        .llm-output {
+            background-color: #0a0a0a; /* Black */
+            color: #f7f3e8; /* Off-white/Cream */
+            border: 1px solid #4b2e2b; /* Dark Brown border */
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            white-space: pre-wrap; /* Preserve whitespace and line breaks */
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .loading-spinner {
+            border: 4px solid rgba(247, 243, 232, 0.3); /* Off-white/Cream with opacity */
+            border-top: 4px solid #00ffc2; /* Mint Green */
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="text-custom-cream">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-5xl">
+
+        <header class="text-center py-12">
+            <h1 class="text-5xl md:text-7xl font-black text-white uppercase">BASS COFFEE <span style="color: #00ffc2;">PARTY</span></h1>
+            <p class="text-xl md:text-2xl text-custom-cream mt-4">Redefining the Rave: Uniting Wellness & Beats in Huntington Beach.</p>
+            <img src="https://images.squarespace-cdn.com/content/587ae666e4fcb543340227bb/f228c79a-4469-4ea3-b4d1-f63bfab90cb1/07_19_25_TGUMMY_BASS_COFFEE-19.jpg?content-type=image%2Fjpeg" alt="BASS COFFEE PARTY event hero image" class="w-full h-auto object-cover rounded-lg mt-8 shadow-lg">
+        </header>
+
+        <section id="bcp1-success" class="section-container">
+            <h2 class="text-3xl font-bold text-center mb-6">Our Inaugural Success</h2>
+            <p class="text-center text-custom-cream mb-8">On July 19, 2025, we launched with a simple idea and zero budget, proving the powerful demand for a new kind of community experience. This was just the beginning.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="kpi-card">
+                    <div class="kpi-number">92</div>
+                    <div class="kpi-label">Attendees</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-number">$0</div>
+                    <div class="kpi-label">Initial Budget</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-number">40K</div>
+                    <div class="kpi-label">Organic IG Impressions</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="section-container">
+            <h2 class="text-3xl font-bold text-center mb-6">The BASS COFFEE PARTY Experience</h2>
+            <p class="text-center text-custom-cream mb-8">More than just a party, it's a holistic event designed to energize mind, body, and soul. We blend high-energy music with elements of health and community.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 gap-8 mb-8">
+                <div class="md:row-span-2">
+                    <img src="https://images.squarespace-cdn.com/content/587ae666e4fcb543340227bb/de1dce0f-fb5e-4b03-9c9e-8650f55ad086/07_19_25_TGUMMY_BASS_COFFEE-06.jpg?content-type=image%2Fjpeg" alt="DJ performing at BASS COFFEE PARTY" class="w-full h-full object-cover rounded-lg shadow-md">
+                </div>
+                <img src="https://images.squarespace-cdn.com/content/587ae666e4fcb543340227bb/589c6fdb-5a2e-4db3-8652-1e1206c3540a/07_19_25_TGUMMY_BASS_COFFEE-24.jpg?content-type=image%2Fjpeg" alt="Attendees enjoying the event" class="w-full h-full object-cover rounded-lg shadow-md">
+                <img src="https://images.squarespace-cdn.com/content/587ae666e4fcb543340227bb/e2f09f58-18fc-4c6f-8de6-fff51c7b6b1c/Print+8.5MB-19.jpg?content-type=image%2Fjpeg" alt="Another view of the event" class="w-full h-full object-cover rounded-lg shadow-md">
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                <div class="feature-item">
+                    <div class="feature-icon" style="background-color: #ff5c28;">🎶</div>
+                    <div>
+                        <h3 class="text-xl font-bold">Electrifying Music</h3>
+                        <p class="text-custom-cream text-opacity-90 mt-1">Cutting-edge electronic dance music DJs providing an epic soundtrack.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon" style="background-color: #00ffc2;">🏋️</div>
+                    <div>
+                        <h3 class="text-xl font-bold">Dynamic Fitness</h3>
+                        <p class="text-custom-cream text-opacity-90 mt-1">Engaging coached workout sessions to energize the body.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon" style="background-color: #f7f3e8;">💧</div>
+                    <div>
+                        <h3 class="text-xl font-bold">Holistic Wellness</h3>
+                        <p class="text-custom-cream text-opacity-90 mt-1">Dedicated recovery zones with cold plunges and saunas for rejuvenation.</p>
+                    </div>
+                </div>
+                 <div class="feature-item">
+                    <div class="feature-icon" style="background-color: #4b2e2b;">☕</div>
+                    <div>
+                        <h3 class="text-xl font-bold">Vibrant Community</h3>
+                        <p class="text-custom-cream text-opacity-90 mt-1">A welcoming atmosphere fostering genuine connections over coffee and good food.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sponsorship-opportunities" class="section-container">
+            <h2 class="text-3xl font-bold text-center mb-6">Sponsorship Opportunities</h2>
+            <p class="text-center text-custom-cream mb-8">Partner with BASS COFFEE PARTY to gain exposure to an engaged audience. Our diverse sponsorship tiers offer unique opportunities to align with a growing wellness and music community.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8 text-custom-cream">
+                <div class="flex justify-between items-center pb-2 border-b border-gray-700">
+                    <span class="font-semibold">Title Sponsor</span>
+                    <span class="text-lg font-bold text-orange-400">$500</span>
+                </div>
+                <div class="flex justify-between items-center pb-2 border-b border-gray-700">
+                    <span class="font-semibold">Wristband Sponsor</span>
+                    <span class="text-lg font-bold text-orange-400">$250</span>
+                </div>
+                <div class="flex justify-between items-center pb-2 border-b border-gray-700">
+                    <span class="font-semibold">Workout Sponsor</span>
+                    <span class="text-lg font-bold text-orange-400">$250</span>
+                </div>
+                <div class="flex justify-between items-center pb-2 border-b border-gray-700">
+                    <span class="font-semibold">Masterclass Sponsor</span>
+                    <span class="text-lg font-bold text-orange-400">$250</span>
+                </div>
+                <div class="flex justify-between items-center pb-2 border-b border-gray-700">
+                    <span class="font-semibold">T-Shirt Sponsor</span>
+                    <span class="text-lg font-bold text-orange-400">$250</span>
+                </div>
+                <div class="flex justify-between items-center pb-2 border-b border-gray-700">
+                    <span class="font-semibold">Vendor Booth Fees</span>
+                    <span class="text-lg font-bold text-orange-400">$50 or 10%</span>
+                </div>
+                <div class="flex justify-between items-center pb-2 border-b border-gray-700">
+                    <span class="font-semibold">Product Sponsor</span>
+                    <span class="text-lg font-bold text-orange-400">Donation</span>
+                </div>
+                <div class="flex justify-between items-center pb-2 border-b border-gray-700">
+                    <span class="font-semibold">Step & Repeat Sponsor</span>
+                    <span class="text-lg font-bold text-orange-400">$200</span>
+                </div>
+                <div class="flex justify-between items-center pb-2 border-b border-gray-700">
+                    <span class="font-semibold">Raffle Sponsor</span>
+                    <span class="text-lg font-bold text-orange-400">$50 Min.</span>
+                </div>
+                <div class="flex justify-between items-center pb-2 border-b border-gray-700">
+                    <span class="font-semibold">Sticker Sponsor</span>
+                    <span class="text-lg font-bold text-orange-400">$150</span>
+                </div>
+                <div class="flex justify-between items-center pb-2 border-b border-gray-700">
+                    <span class="font-semibold">Venue Sponsor</span>
+                    <span class="text-lg font-bold text-orange-400">Donation</span>
+                </div>
+            </div>
+        </section>
+
+        <div class="flex flex-col md:flex-row justify-center items-center gap-8 my-12">
+            <img src="https://images.squarespace-cdn.com/content/587ae666e4fcb543340227bb/c4bf3c45-0d45-4d09-afde-d5a7b109921c/Print+8.5MB-29.jpg?content-type=image%2Fjpeg" alt="Event crowd at BASS COFFEE PARTY" class="w-full md:w-1/2 h-auto object-cover rounded-lg shadow-lg">
+            <img src="https://images.squarespace-cdn.com/content/587ae666e4fcb543340227bb/cfc0b27a-f6d2-4494-866b-90ca49c67a22/Print+8.5MB-18.jpg?content-type=image%2Fjpeg" alt="DJ and crowd at BASS COFFEE PARTY" class="w-full md:w-1/2 h-auto object-cover rounded-lg shadow-lg">
+        </div>
+
+        <section id="growth" class="section-container">
+            <h2 class="text-3xl font-bold text-center mb-6">Our Vision for Growth</h2>
+            <p class="text-center text-custom-cream mb-8">We are committed to continually enhancing the BASS COFFEE PARTY experience and expanding our reach, with Angry Al's patio remaining our core venue for future events.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                <div class="flow-step">
+                    <div class="flow-icon" style="background-color: #ff5c28;">🎟️</div>
+                    <div>
+                        <h3 class="font-bold">Enhance Experience</h3>
+                        <p class="text-sm text-custom-cream">Implement wristbands, explore mocktail vendors, and streamline check-ins for a smoother event flow.</p>
+                    </div>
+                </div>
+                <div class="flow-step">
+                     <div class="flow-icon" style="background-color: #00ffc2;">🎤</div>
+                    <div>
+                        <h3 class="font-bold">Broaden Appeal</h3>
+                        <p class="text-sm text-custom-cream">Introduce new and younger DJs to diversify the energy and attract a wider audience.</p>
+                    </div>
+                </div>
+                <div class="flow-step">
+                     <div class="flow-icon" style="background-color: #f7f3e8;">📢</div>
+                    <div>
+                        <h3 class="font-bold">Increase Visibility</h3>
+                        <p class="text-sm text-custom-cream">Prominent street-facing signage and new community engagement initiatives to draw more attendees.</p>
+                    </div>
+                </div>
+                 <div class="flow-step">
+                     <div class="flow-icon" style="background-color: #4b2e2b;">🏆</div>
+                    <div>
+                        <h3 class="font-bold">Drive Engagement</h3>
+                        <p class="text-sm text-custom-cream">Introduce fun awards like "Dance Floor VIP" and new interactive activities to keep the energy high.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sponsors" class="section-container">
+            <h2 class="text-3xl font-bold text-center mb-6">The Power of Partnership</h2>
+            <p class="text-center text-custom-cream mb-8">Sponsors gain massive organic reach and direct access to an engaged, local audience through our targeted marketing and post-event email campaigns. We ensure your brand is seen and appreciated.</p>
+            <div class="text-center">
+                <h3 class="font-bold text-xl mb-4">Past & Present Partners Include:</h3>
+                <div class="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-custom-cream font-semibold">
+                    <span>Angry Al's</span>
+                    <span>602 Coffee House</span>
+                    <span>CrossFit Surf City</span>
+                    <span>The Chillout Rig</span>
+                    <span>ProBaller</span>
+                    <span>Lululemon</span>
+                    <span>Sticky Fingers Designs</span>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center py-12">
+            <h2 class="text-4xl font-bold text-white">Join The Movement</h2>
+            <p class="text-xl text-custom-cream mt-2">Our next event is on September 6th! Don't miss out on the next wave of wellness and beats.</p>
+            <div class="my-8">
+                <img src="https://images.squarespace-cdn.com/content/587ae666e4fcb543340227bb/50735db0-909d-4bf8-88bc-1e2dba21ae83/BCP+Flyer+9-6-2025.png?content-type=image%2Fpng" alt="BASS COFFEE PARTY September 6th Flyer" class="w-full max-w-xl mx-auto h-auto object-cover rounded-lg shadow-lg">
+            </div>
+            <div class="mt-8">
+                <a href="https://lu.ma/sndkq6bv?" target="_blank" class="inline-block text-gray-900 font-bold py-4 px-8 rounded-lg transition-transform duration-300 hover:scale-105" style="background-color: #00ffc2;">
+                    Get Tickets for Sept 6th!
+                </a>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        // No Chart.js or LLM related JavaScript in this version
+    </script>
+
+</body>
+</html>
 
